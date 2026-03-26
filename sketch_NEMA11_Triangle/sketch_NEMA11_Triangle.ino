@@ -1,14 +1,15 @@
 // PIN DEFENITIONS
-const int PUL_PIN = 3;  // Pulse input
-const int DIR_PIN = 5;  // Direction input
-const int FW_PIN  = 6;
-const int BW_PIN  = 7;
+const int PUL_PIN  = 3;  // Pulse input
+const int DIR_PIN  = 5;  // Direction input
+const int FW_PIN   = 6;
+const int BW_PIN   = 7;
 const int AUTO_PIN = 8;
 
 // constants for motor control
-const int PulseDelay = 5;  // ms between the pulses for the Steppermotor
-const int Steps      = 1;  // 1 rotation = 1,8° by full step
-char incomming = 0;
+const int PulseDelay = 0;  // ms between the pulses for the Steppermotor
+const int Steps      = 5;  // 1 pulse = 1,8° by full step
+char incomming       = 0;
+short CaseCounter    = 0;
 
 void setup() {
   // put your setup code here, to run once:
@@ -31,8 +32,19 @@ void loop() {
     incomming = Serial.read();
   }
   
-  
-  switch(incomming){
+  if(CaseCounter == 0 && incomming == 'x')
+  {
+    CaseCounter++;
+    Serial.println(CaseCounter);
+  }
+
+  if(CaseCounter == 1 && incomming == 'x')
+  {
+    CaseCounter--;
+    Serial.println(CaseCounter);
+  }
+
+  switch(CaseCounter){
     case 0:
       if (incomming == 'w')
       {
@@ -60,7 +72,7 @@ void loop() {
       
     break;
 
-    case 1:
+    default:
       if(FW_PIN > 0 && BW_PIN < 1) // if FW_PIN == 5v
       {
         Serial.println("KNOP - Beweging vooruit");
