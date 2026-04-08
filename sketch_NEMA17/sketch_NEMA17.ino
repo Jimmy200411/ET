@@ -1,4 +1,10 @@
-// Pin definities
+/*
+  # made by Jimmy
+  This program is made to control a stepper motor with a TB6600 driver
+  controlled by serial communication
+*/
+
+// Pin definitions
 int PUL_PIN = 3;  // Pulse input      (DQ)
 int DIR_PIN = 5;  // Direction input  (DQ)
 
@@ -17,7 +23,7 @@ void setup() {
   pinMode(PUL_PIN, OUTPUT); 
   pinMode(DIR_PIN, OUTPUT);
 
-  // Motor aansturen: DIR_PIN; HIGH = clockwise, LOW = counterclockwise
+  // Motor control: DIR_PIN; HIGH = clockwise, LOW = counterclockwise
   digitalWrite(DIR_PIN, HIGH);  
   digitalWrite(PUL_PIN, HIGH);
   delay(1000);
@@ -36,7 +42,7 @@ void loop() {
     Serial.println("message incomming");
     char incomming = Serial.read();
 
-    // 1 'w' is 1 step clockwise
+    // 1 'w' is 1 STEPS clockwise
     if (incomming == 'w')
     {
       Serial.println("Beweging vooruit");
@@ -49,7 +55,7 @@ void loop() {
       }
     }
 
-    // 1 's' is 1 step counterclockwise
+    // 1 's' is 1 STEPS counterclockwise
     else if (incomming == 's')
     {
       Serial.println("Beweging achteruit");
@@ -62,7 +68,7 @@ void loop() {
       }
     }
 
-    // if nothing is writen, print message in serial monitor.
+    // if SPACE is written to the serial port, print message in serial monitor.
     else if (incomming == ' ')
     {
       Serial.println("no message incomming");
